@@ -1,5 +1,11 @@
 
 import {
+  cadastrarCliente,
+  listarClientes,
+  buscarClientePorId
+} from "./clientes";
+
+import {
   cadastrarProduto,
   listarProdutos,
   buscarProdutoPorId,
@@ -60,3 +66,32 @@ console.log("Cadastro realizado:", invalido);
 
 console.log("\n9. LISTAGEM FINAL");
 console.table(listarProdutos());
+
+
+
+console.log("\n========== CLIENTES ==========");
+
+console.log("\n1. LISTAGEM DE CLIENTES");
+console.table(listarClientes());
+
+console.log("\n2. BUSCA DE CLIENTE POR ID");
+console.log(buscarClientePorId(1));
+
+console.log("\n3. CADASTRO DE CLIENTE");
+const novoCliente = cadastrarCliente({
+  id: 4,
+  nome: "Carlos Souza",
+  email: "carlos@email.com"
+});
+console.log("Cadastro realizado:", novoCliente);
+
+console.log("\n4. TESTE DE E-MAIL DUPLICADO");
+const clienteDuplicado = cadastrarCliente({
+  id: 5,
+  nome: "Pedro Lima",
+  email: "ana@email.com"
+});
+console.log("Cadastro realizado:", clienteDuplicado);
+
+console.log("\n5. LISTAGEM FINAL DE CLIENTES");
+console.table(listarClientes());
