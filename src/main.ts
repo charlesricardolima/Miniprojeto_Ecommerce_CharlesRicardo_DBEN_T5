@@ -1,4 +1,15 @@
 import {
+  exibirRelatorioGeral,
+  exibirRelatorioCliente
+} from "./relatorios";
+
+import {
+  finalizarPedido,
+  listarPedidos,
+  buscarPedidosPorCliente
+} from "./pedidos";
+
+import {
   adicionarAoCarrinho,
   removerDoCarrinho,
   alterarQuantidade,
@@ -157,3 +168,96 @@ console.log("Resultado:", removerDoCarrinho(2));
 console.log("\n9. CARRINHO FINAL");
 console.table(listarCarrinho());
 console.log("Total final: R$", calcularTotal().toFixed(2));
+
+
+
+console.log("\n========== PEDIDOS ==========");
+
+// O carrinho já possui 3 Mouses
+// Vamos adicionar 2 Teclados
+console.log("\n1. PREPARAR COMPRA");
+adicionarAoCarrinho(2, 2);
+console.table(listarCarrinho());
+console.log("Total: R$", calcularTotal().toFixed(2));
+
+// Teste com cliente inexistente
+console.log("\n2. CLIENTE INEXISTENTE");
+console.log("Resultado:", finalizarPedido(999));
+
+// Finalizar pedido para Ana Silva
+console.log("\n3. FINALIZAR PEDIDO");
+const pedidoFinalizado = finalizarPedido(1);
+
+if (pedidoFinalizado) {
+  console.log("ID:", pedidoFinalizado.id);
+  console.log("Cliente:", pedidoFinalizado.clienteId);
+  console.table(pedidoFinalizado.itens);
+  console.log("Total: R$", pedidoFinalizado.total.toFixed(2));
+  console.log("Data:", pedidoFinalizado.data);
+}
+
+// Verificar estoque após a compra
+console.log("\n4. ESTOQUE ATUALIZADO");
+console.table(listarProdutos());
+
+// Verificar carrinho vazio
+console.log("\n5. CARRINHO APÓS A COMPRA");
+console.table(listarCarrinho());
+
+// Tentar finalizar carrinho vazio
+console.log("\n6. TESTE DE CARRINHO VAZIO");
+console.log("Resultado:", finalizarPedido(1));
+
+// Consultar pedidos
+console.log("\n7. TODOS OS PEDIDOS");
+console.log(listarPedidos());
+
+console.log("\n8. PEDIDOS DA CLIENTE ANA");
+console.log(buscarPedidosPorCliente(1));
+
+// Verificar histórico de preços
+console.log("\n9. TESTE DE PREÇO HISTÓRICO");
+
+const mouse = buscarProdutoPorId(1);
+
+if (mouse) {
+  atualizarProduto(
+    mouse.id,
+    mouse.nome,
+    mouse.categoria,
+    60,
+    mouse.estoque
+  );
+}
+
+console.log("Novo preço do Mouse:",
+  buscarProdutoPorId(1)?.preco
+);
+
+console.log("Preço registrado no pedido:",
+  pedidoFinalizado?.itens.find(
+    item => item.produtoId === 1
+  )?.precoUnitario
+);
+
+// Testar estoque alterado após inclusão no carrinho
+console.log("\n10. TESTE DE ESTOQUE INSUFICIENTE");
+
+adicionarAoCarrinho(3, 2);
+adicionarAoCarrinho(4, 1);
+
+// Simular redução do estoque do Caderno
+atualizarProduto(3, "Caderno", "Papelaria", 20, 1);
+
+console.log("Resultado:", finalizarPedido(1));
+console.log("Estoque da Caneta:", buscarProdutoPorId(4)?.estoque);
+console.log("Quantidade de pedidos:", listarPedidos().length);
+console.table(listarCarrinho());
+
+console.log("\n========== RELATÓRIOS ==========");
+
+// Relatório geral das vendas
+exibirRelatorioGeral();
+
+// Relatório de compras da Ana Silva
+exibirRelatorioCliente(1);
