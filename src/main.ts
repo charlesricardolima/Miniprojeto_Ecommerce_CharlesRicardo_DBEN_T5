@@ -210,10 +210,10 @@ console.log("Resultado:", finalizarPedido(1));
 
 // Consultar pedidos
 console.log("\n7. TODOS OS PEDIDOS");
-console.log(listarPedidos());
+console.dir(listarPedidos(), { depth: null });
 
 console.log("\n8. PEDIDOS DA CLIENTE ANA");
-console.log(buscarPedidosPorCliente(1));
+console.dir(buscarPedidosPorCliente(1), { depth: null });
 
 // Verificar histórico de preços
 console.log("\n9. TESTE DE PREÇO HISTÓRICO");
