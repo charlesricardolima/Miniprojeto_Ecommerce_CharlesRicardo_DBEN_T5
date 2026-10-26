@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noEmitOnError": true, // Impede a geração de arquivos de saída se houver erros de compilação
     "target": "ES2020",
     "module": "CommonJS",
     "rootDir": "./src",
