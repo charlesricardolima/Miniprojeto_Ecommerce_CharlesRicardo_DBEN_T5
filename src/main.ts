@@ -1,3 +1,11 @@
+import {
+  adicionarAoCarrinho,
+  removerDoCarrinho,
+  alterarQuantidade,
+  listarCarrinho,
+  calcularSubtotal,
+  calcularTotal
+} from "./carrinho";
 
 import {
   cadastrarCliente,
@@ -95,3 +103,57 @@ console.log("Cadastro realizado:", clienteDuplicado);
 
 console.log("\n5. LISTAGEM FINAL DE CLIENTES");
 console.table(listarClientes());
+
+
+
+console.log("\n========== CARRINHO ==========");
+
+// Adicionar produtos
+console.log("\n1. ADICIONAR PRODUTOS");
+console.log("Mouse:", adicionarAoCarrinho(1, 2));
+console.log("Teclado:", adicionarAoCarrinho(2, 1));
+console.table(listarCarrinho());
+
+// Adicionar novamente o mesmo produto
+console.log("\n2. ADICIONAR MOUSE NOVAMENTE");
+console.log("Resultado:", adicionarAoCarrinho(1, 1));
+console.table(listarCarrinho());
+
+// Alterar quantidade
+console.log("\n3. ALTERAR QUANTIDADE DO TECLADO");
+console.log("Resultado:", alterarQuantidade(2, 2));
+console.table(listarCarrinho());
+
+// Calcular valores
+console.log("\n4. SUBTOTAIS E TOTAL");
+
+for (const item of listarCarrinho()) {
+  console.log(
+    "Produto:", item.produtoId,
+    "| Quantidade:", item.quantidade,
+    "| Subtotal: R$", calcularSubtotal(item).toFixed(2)
+  );
+}
+
+console.log("Total: R$", calcularTotal().toFixed(2));
+
+// Testar estoque insuficiente
+console.log("\n5. TESTE DE ESTOQUE INSUFICIENTE");
+console.log("Resultado:", adicionarAoCarrinho(1, 20));
+
+// Testar produto inexistente
+console.log("\n6. TESTE DE PRODUTO INEXISTENTE");
+console.log("Resultado:", adicionarAoCarrinho(999, 1));
+
+// Testar quantidade inválida
+console.log("\n7. TESTE DE QUANTIDADE INVÁLIDA");
+console.log("Resultado:", alterarQuantidade(1, 0));
+
+// Remover produto
+console.log("\n8. REMOVER TECLADO");
+console.log("Resultado:", removerDoCarrinho(2));
+
+// Resultado final
+console.log("\n9. CARRINHO FINAL");
+console.table(listarCarrinho());
+console.log("Total final: R$", calcularTotal().toFixed(2));
